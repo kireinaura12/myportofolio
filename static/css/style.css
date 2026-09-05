@@ -25,6 +25,19 @@ h1, .brand {
     font-family: Georgia, "Times New Roman", Times, serif;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&display=swap');
+
+.hero-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 6rem;
+  font-weight: 700;
+  color: #1e2a5e;
+  line-height: 0.9;
+}
+
+.hero-wrap {
+    position: relative;
+}
 .container {
     max-width: 960px;
     margin: 0 auto;
@@ -32,7 +45,7 @@ h1, .brand {
 }
 
 .site-header {
-    border-bottom: 1px solid var(--line);
+    background-color: #75CBD1;
 }
 
 .site-header .container {
@@ -60,11 +73,17 @@ h1, .brand {
     font-size: 0.95rem;
 }
 
-.hero {
+.divider {
+    background-color: #F2D2FF;
+    text-align: center;
+    padding: 0 1.5rem;
+}
+
+.profile {
     padding: 4.5rem 0 5rem;
 }
 
-.hero-grid {
+.profile-grid {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
     grid-template-areas:
@@ -73,15 +92,15 @@ h1, .brand {
     gap: 1.5rem 3rem;
 }
 
-.hero-identity {
+.profile-identity {
     grid-area: identity;
 }
 
-.hero-details {
+.profile-details {
     grid-area: details;
 }
 
-.hero-kicker {
+.profile-kicker {
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -90,7 +109,7 @@ h1, .brand {
     margin-bottom: 0.75rem;
 }
 
-.hero-identity h1 {
+.profile-identity h1 {
     font-size: clamp(3rem, 7vw, 5rem);
     line-height: 0.95;
 }
@@ -141,7 +160,7 @@ h1, .brand {
     background-color: var(--accent);
 }
 
-.hero-photo {
+.profile-photo {
     grid-area: photo;
     align-self: center;
     position: relative;
@@ -173,11 +192,11 @@ h1, .brand {
     padding: 1.5rem;
     color: var(--text-muted);
     font-size: 0.85rem;
-    border-top: 1px solid var(--line);
+    background-color: #75CBD1;
 }
 
 @media (max-width: 600px) {
-    .hero-grid {
+    .profile-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
             "identity"
@@ -185,7 +204,7 @@ h1, .brand {
             "details";
     }
 
-    .hero-photo {
+    .profile-photo {
         max-width: 150px;
     }
 
