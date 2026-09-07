@@ -258,12 +258,12 @@ h1, .brand {
 
 .project-card {
     display: grid;
+    grid-template-rows: auto 1fr;
     grid-template-columns: 1fr;
     background-color: color-mix(in srgb, var(--button-secondary) 30%, transparent);
     border-radius: var(--radius);
     flex: 0 0 calc(33.333% - 1rem);
     scroll-snap-align: start;
-    overflow: hidden; 
 }
 
 .project-thumb {
@@ -284,6 +284,7 @@ h1, .brand {
 }
 
 .project-details {
+    flex: 1;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -298,7 +299,7 @@ h1, .brand {
 
 .project-details p {
     margin-bottom: 4rem;
-    font-family: 1rem;
+    font-size: 1rem;
     color: var(--text);
 }
 
