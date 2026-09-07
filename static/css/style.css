@@ -5,40 +5,37 @@
 }
 
 :root {
-    --ink: #DAE8FD; 
-    --paper: #0C0D45;
-    --accent: #75CBD1;
-    --accent-dark: #0C0D45;
-    --line: #75CBD1;
-    --text-muted: #F2D2FF;
+    --text: #F1FFEB;
+    --background: #3D151E;
+    --accent: #C3A6C9;
+    --button-primary:#8E473E;
+    --button-secondary: #B8EBD7;
     --radius: 20px;
 }
 
 body {
-    font-family: Georgia, "Times New Roman", Times, serif;
-    color: var(--ink);
-    background-color: var(--paper);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    background-color: var(--background);
     line-height: 1.6;
 }
 
 h1, .brand {
-    font-family: Georgia, "Times New Roman", Times, serif;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&display=swap');
-
-.hero-title {
-  font-family: 'Fredoka', sans-serif;
-  font-size: clamp(2.5rem, 10vw, 6rem);
-  font-weight: 700;
-  color: #1e2a5e;
-  line-height: 0.9;
-  text-align: center;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .hero-wrap {
     position: relative;
     text-align: center;
+    margin: 3rem 3rem;
+}
+
+.hero-wrap img {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .container {
@@ -48,7 +45,8 @@ h1, .brand {
 }
 
 .site-header {
-    background-color: #75CBD1;
+    background-color: var(--accent);
+    font-family: 'Quicksand', sans-serif;
 }
 
 .site-header .container {
@@ -62,7 +60,7 @@ h1, .brand {
 .brand {
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--ink);
+    color: var(--background);
     text-decoration: none;
     display: flex;
     line-height: 1.2;
@@ -76,9 +74,10 @@ h1, .brand {
 }
 
 .site-header nav a {
-    color: var(--ink);
+    color: var(--background);
     text-decoration: none;
     font-size: 1.5rem;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .star {
@@ -132,10 +131,10 @@ h1, .brand {
 }
 
 .social-link {
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: var(--paper);
-    background-color: var(--ink);
+    color: var(--background);
+    background-color: var(--button-secondary);
     padding: 0.5rem 1rem;
     transition: background-color 0.2s ease;
     text-align: center;
@@ -144,7 +143,7 @@ h1, .brand {
 }
 
 .social-link:hover {
-    background-color: var(--accent);
+    opacity: 0.7;
 }
 
 .background-grid {
@@ -152,8 +151,7 @@ h1, .brand {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem 3rem;
     grid-template-areas: "education experience";
-    padding: 0rem 0 2rem;
-    
+    padding: 0rem 1rem 3rem;
 }
 
 .background-education {
@@ -162,8 +160,8 @@ h1, .brand {
 }
 
 .background-title {
-    background-color: #DAE8FD;
-    color: white;
+    background-color: var(--button-primary);
+    color: var(--text);
     padding: 0.75rem 1.5rem;
     border-radius: var(--radius) var(--radius) var(--radius) 0;
     display: inline-block;
@@ -196,9 +194,10 @@ h1, .brand {
 
 .profile-kicker {
     font-size: 0.85rem;
+    font-family: 'Baloo 2', sans-serif;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-dark);
+    color: var(--button-secondary);
     font-weight: 700;
     margin-bottom: 0.75rem;
 }
@@ -211,20 +210,20 @@ h1, .brand {
 .bio {
     color: var(--text-muted);
     max-width: 480px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .meta-list {
     display: flex;
     gap: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .meta-row dt {
-    font-size: 0.75rem;
+    font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--text-muted);
+    color: var(--button-secondary);
     margin-bottom: 0.15rem;
 }
 
@@ -235,13 +234,12 @@ h1, .brand {
 
 .avatar {
     position: relative;
-    z-index: 1;
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius);
-    border: 3px solid var(--ink);
+    border: 3px solid var(--text);
 }
 
 .projects {
@@ -261,7 +259,7 @@ h1, .brand {
 .project-card {
     display: grid;
     grid-template-columns: 1fr;
-    background-color: var(--line);
+    background-color: color-mix(in srgb, var(--button-secondary) 30%, transparent);
     border-radius: var(--radius);
     flex: 0 0 calc(33.333% - 1rem);
     scroll-snap-align: start;
@@ -269,7 +267,7 @@ h1, .brand {
 }
 
 .project-thumb {
-    background-color: #D9CFCF;
+    background-color: color-mix(in srgb, var(--button-secondary) 0%, transparent);
     aspect-ratio: 16/9; /*project img 16:9*/
     display: flex;
     align-items: center;
@@ -280,6 +278,9 @@ h1, .brand {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: var(--radius);
+    border: 3px solid var(--text);
+    display: block;
 }
 
 .project-details {
@@ -287,7 +288,7 @@ h1, .brand {
     display: flex;
     flex-direction: column;
     justify-content: space-between;  
-    color: var(--ink);
+    color: var(--text);
     gap: 1rem;
 }
 
@@ -298,19 +299,19 @@ h1, .brand {
 .project-details p {
     margin-bottom: 4rem;
     font-family: 1rem;
-    color: var(--text-muted);
+    color: var(--text);
 }
 
 .project-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--paper);
-    color: var(--text-muted);
+    background-color: var(--button-secondary);
+    color: var(--background);
     padding: 0.5rem 1.2rem;
     border-radius: var(--radius);
     width: fit-content;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 0.8rem;
     align-self: flex-end;
 }
@@ -323,11 +324,11 @@ h1, .brand {
     padding: 1.5rem;
     color: var(--text-muted);
     font-size: 0.85rem;
-    background-color: #75CBD1;
+    background-color: var(--accent);
 }
 
 .divider {
-    background-color: #F2D2FF;
+    background-color: var(--accent);
     padding: 0.75rem 0;
     overflow: hidden;
     white-space: nowrap;
@@ -335,7 +336,8 @@ h1, .brand {
 
 .divider-track {
     display: inline-block;
-    color: var(--paper);
+    color: var(--background);
+    font-family: 'Quicksand', sans-serif;
     font-weight: 700;
     animation: scroll-left 15s linear infinite;
 }
@@ -346,6 +348,31 @@ h1, .brand {
 }
 
 @media (max-width: 600px) { 
+    .site-header .container {
+        padding: 0.7rem;
+    }
+
+    .brand {
+        font-size: 1rem;
+        gap: 0.5rem;
+    }
+
+    .brand-text {
+        font-size: 0.85rem;
+    }
+
+    .star{
+        max-width: 32px;
+    }
+
+    .site-header nav {
+        gap: 1rem;
+    }
+
+    .site-header nav a {
+        font-size: 0.85rem;
+    }
+
     .profile-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -384,5 +411,9 @@ h1, .brand {
 
     .project-thumb {
         aspect-ratio: 16 / 9;
+    }
+
+    .site-footer{
+        padding: 0.7rem;
     }
 }
