@@ -29,14 +29,16 @@ h1, .brand {
 
 .hero-title {
   font-family: 'Fredoka', sans-serif;
-  font-size: 6rem;
+  font-size: clamp(2.5rem, 10vw, 6rem);
   font-weight: 700;
   color: #1e2a5e;
   line-height: 0.9;
+  text-align: center;
 }
 
 .hero-wrap {
     position: relative;
+    text-align: center;
 }
 
 .container {
@@ -90,8 +92,8 @@ h1, .brand {
     grid-template-areas:
         "identity photo"
         "details  photo"
-        "details links";
-    gap: 1.5rem 3rem;
+        "program links";
+    gap: 1.5rem 1.5rem;
     grid-area: profile;
 }
 
@@ -101,6 +103,13 @@ h1, .brand {
 
 .profile-details {
     grid-area: details;
+}
+
+.profile-program {
+    grid-area: program;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .profile-photo {
@@ -114,6 +123,23 @@ h1, .brand {
     gap: 0.5rem;
     flex-wrap: wrap;
     grid-area: links;
+    align-items: flex-start;
+}
+
+.social-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--paper);
+    background-color: var(--ink);
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    border-radius: 50px;
+    flex: 1;
+}
+
+.social-link:hover {
+    background-color: var(--accent);
 }
 
 .background-grid {
@@ -121,7 +147,6 @@ h1, .brand {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem 3rem;
     grid-template-areas: "education experience";
-    margin-top: 2rem;
 }
 
 .background-education {
@@ -133,7 +158,7 @@ h1, .brand {
     background-color: #DAE8FD;
     color: white;
     padding: 0.75rem 1.5rem;
-    border-radius: 0 var(--radius) 0 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
     display: inline-block;
     position: relative;
     z-index: 2;
@@ -143,7 +168,7 @@ h1, .brand {
     background-color: #E4DFD3;
     color: #3D151E;
     padding: 2rem 1.5rem 1.5rem;
-    border-radius: 0 var(--radius) var(--radius) var(--radius);
+    border-radius: 0 var(--radius) var(--radius) 0;
     margin-top: -0.5rem;
     position: relative;
     z-index: 1;
@@ -200,22 +225,6 @@ h1, .brand {
 }
 
 
-.social-link {
-    display: inline-block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--paper);
-    background-color: var(--ink);
-    border-radius: var(--radius);
-    padding: 0.5rem 1.1rem;
-    transition: background-color 0.2s ease;
-}
-
-.social-link:hover {
-    background-color: var(--accent);
-}
-
 .avatar {
     position: relative;
     z-index: 1;
@@ -231,18 +240,29 @@ h1, .brand {
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
+
+.projects-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto; /*slide horizontal*/
+    scroll-snap-type: x mandatory;
+    gap: 1.5rem;
+    margin: 0 5rem;    
+}
+
 .project-card {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr;
     background-color: var(--line);
     border-radius: var(--radius);
+    flex: 0 0 calc(33.333% - 1rem);
+    scroll-snap-align: start;
     overflow: hidden; 
-    margin: 1.5rem;
 }
 
 .project-thumb {
     background-color: #D9CFCF;
-    height: 100%;
+    aspect-ratio: 16/9; /*project img 16:9*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -260,6 +280,7 @@ h1, .brand {
     flex-direction: column;
     justify-content: space-between;  
     color: var(--ink);
+    gap: 1rem;
 }
 
 .project-details h3 {
@@ -267,7 +288,7 @@ h1, .brand {
 }
 
 .project-details p {
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
     font-family: 1rem;
     color: var(--text-muted);
 }
@@ -288,7 +309,6 @@ h1, .brand {
 
 .project-btn:hover {
     opacity: 0.8;
-
 }
 
 .site-footer {
@@ -298,20 +318,44 @@ h1, .brand {
     background-color: #75CBD1;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px) { 
     .profile-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
             "identity"
             "photo"
-            "details";
+            "details"
+            "program"
+            "links";
     }
 
     .profile-photo {
-        max-width: 150px;
+        max-width: 280px;
+        margin: 0 auto;
     }
 
     .social-links {
-        justify-content: flex-start;
+        justify-content: center;
+    }
+
+    .background-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "education"
+            "experience";
+    }
+
+    .projects-grid {
+        margin: 0 2rem;
+        padding: 1.5rem 0;
+    }
+
+    .project-card {
+        grid-template-columns: 1fr;
+        flex: 0 0 100%;
+    }
+
+    .project-thumb {
+        aspect-ratio: 16 / 9;
     }
 }
