@@ -44,7 +44,7 @@ h1, .brand {
 .container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 1.5rem 1rem;
+    padding: 1rem 1rem;
 }
 
 .site-header {
@@ -56,6 +56,7 @@ h1, .brand {
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
+    justify-content: space-between;
 }
 
 .brand {
@@ -63,37 +64,41 @@ h1, .brand {
     font-weight: 700;
     color: var(--ink);
     text-decoration: none;
+    display: flex;
+    line-height: 1.2;
+    align-items: center; 
+    gap: 0.75rem;
 }
 
 .site-header nav {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .site-header nav a {
     color: var(--ink);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 1.5rem;
 }
 
-.divider {
-    background-color: #F2D2FF;
-    text-align: center;
-    padding: 0.75rem;
+.star {
+    max-width: 50px;
+    flex-shrink: 0;
 }
+
 
 .profile {
-    padding: 3rem 0 5rem;
+    padding: 2rem 0 2rem;
 }
 
 .profile-grid {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
     grid-template-areas:
-        "identity photo"
+    "identity photo"
         "details  photo"
         "program links";
-    gap: 1.5rem 1.5rem;
+        gap: 1.5rem 1.5rem;
     grid-area: profile;
 }
 
@@ -147,6 +152,8 @@ h1, .brand {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem 3rem;
     grid-template-areas: "education experience";
+    padding: 0rem 0 2rem;
+    
 }
 
 .background-education {
@@ -154,27 +161,27 @@ h1, .brand {
     position: relative;
 }
 
-.education-title {
+.background-title {
     background-color: #DAE8FD;
     color: white;
     padding: 0.75rem 1.5rem;
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-radius: var(--radius) var(--radius) var(--radius) 0;
     display: inline-block;
     position: relative;
     z-index: 2;
 }
 
-.education-body {
+.background-body {
     background-color: #E4DFD3;
     color: #3D151E;
     padding: 2rem 1.5rem 1.5rem;
-    border-radius: 0 var(--radius) var(--radius) 0;
+    border-radius: 0 var(--radius) var(--radius) var(--radius);
     margin-top: -0.5rem;
     position: relative;
     z-index: 1;
 }
 
-.education-body ul {
+.background-body ul {
     list-style-position: outside;
     padding-left: 1.2rem;
     display: flex;
@@ -184,6 +191,7 @@ h1, .brand {
 
 .background-experience {
     grid-area: experience;
+    position: relative;
 }
 
 .profile-kicker {
@@ -316,6 +324,25 @@ h1, .brand {
     color: var(--text-muted);
     font-size: 0.85rem;
     background-color: #75CBD1;
+}
+
+.divider {
+    background-color: #F2D2FF;
+    padding: 0.75rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.divider-track {
+    display: inline-block;
+    color: var(--paper);
+    font-weight: 700;
+    animation: scroll-left 15s linear infinite;
+}
+
+@keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
 
 @media (max-width: 600px) { 
