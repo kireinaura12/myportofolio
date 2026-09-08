@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kireina - Portfolio</title>
+    <title>{{ name }} - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Poppins:wght@400;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
@@ -16,11 +16,11 @@
         <div class="container">
             <a href="#aboutme" class="brand">
                 <img class="star" src="/static/img/star.png" alt="Star icon">
-                <span class="brand-text">Kireina<br>Naura Alifa</span>
+                <span class="brand-text">{{ name }}</span>
             </a>
             <nav>
-                <a href="#aboutme">About</a>
-                <a href="#projects">Project</a>
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
             </nav>
         </div>
     </header>
@@ -47,17 +47,17 @@
                 <!-- Profile kicker -->
                 <div class="profile-identity"> 
                     <p class="profile-kicker">Computer Science &middot; Universitas Indonesia</p>
-                    <h1>Kireina Naura Alifa</h1>
+                    <h1>{{ name }}</h1>
                 </div>
 
                 <!-- Profile photo -->
                 <div class="profile-photo">
-                    <img class="avatar" src="/static/img/1000213001.jpg" alt="Photo of Kireina">
+                    <img class="avatar" src="/static/img/1000213001.jpg" alt="Photo of {{ name }}">
                 </div>
 
                 <!-- profile details -->
                 <div class="profile-details">
-                    <p class="bio">Hi! I'm a second-year student with a growing interest in Product Management and Data Science. I actively explore other areas of computer science through bootcamps, and enjoy collaborating on team-based projects that sharpen my problem solving and adaptability skills.</p>
+                    <p class="bio">{{ bio }}</p>
                 </div>
 
                 <!-- detail program n NPM -->
@@ -65,11 +65,11 @@
                     <dl class="meta-list">
                         <div class="meta-row">
                             <dt>NPM</dt>
-                            <dd>2506590006</dd>
+                            <dd>{{ npm }}</dd>
                         </div>
                         <div class="meta-row">
                             <dt>Program</dt>
-                            <dd>S1 Ilmu Komputer</dd>
+                            <dd>{{ study_program }}</dd>
                         </div>
                     </dl>
                 </div>
@@ -171,7 +171,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Kireina. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
 </body>
