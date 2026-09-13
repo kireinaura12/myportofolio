@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience - {{ name }}</title>
+    <title>Projects - {{ name }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Poppins:wght@400;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
@@ -27,32 +27,27 @@
     </header>
 
     <main>
-        <section class="experience-section" id="experience">
+        <section class="projects" id="projects">
             <div class="container">
-                <p class="section-kicker">Perjalanan saya sejauh ini</p>
-                <h1>Experience</h1>
+                <p class="section-kicker">projects</p>
+                <h1>Projects</h1>
 
-                <div class="experience-grid">
-                    {% for experience in experience_list %}
-                        <article class="experience-card">
-                            <span class="experience-category">
-                                {{ experience.get_category_display }}
-                            </span>
-                            <h2>{{ experience.title }}</h2>
-                            <p class="experience-description">
-                                {{ experience.description }}
-                            </p>
-
-                            {% if experience.is_ongoing %}
-                                <p class="experience-status">Sedang berlangsung</p>
-                            {% else %}
-                                <p class="experience-status">Selesai</p>
-                            {% endif %}
-                        </article>
+                <div class="projects-grid">
+                    {% for project in project_list %}
+                        <div class="project-card">
+                            <div class="project-thumb">
+                                <img src="{{ project.thumbnail }}" alt="Photo of {{ project.name }}">
+                            </div>
+                            <div class="project-details">
+                                <div>
+                                    <h3 class="project-name">{{ project.name }}</h3>
+                                    <p class="project-desc">{{ project.description }}</p>
+                                </div>
+                                <a href="{{ project.link }}" class="project-btn">See Details →</a>
+                            </div>
+                        </div>
                     {% empty %}
-                        <p class="empty-state">
-                            Belum ada pengalaman yang ditambahkan.
-                        </p>
+                        <p class="empty-state">Belum ada proyek yang ditambahkan.</p>
                     {% endfor %}
                 </div>
             </div>

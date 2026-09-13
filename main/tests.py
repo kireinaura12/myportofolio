@@ -16,7 +16,7 @@ class MainTest(TestCase):
     def test_main_url_is_accessible(self):
         response = self.client.get(reverse("main:show_main"))
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 20)
         self.assertTemplateUsed(response, "index.html")
         self.assertNotContains(response, self.experience.title)
         self.assertContains(response, f'href="{reverse("main:show_experience")}"')
