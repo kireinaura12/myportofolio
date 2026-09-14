@@ -12,8 +12,7 @@ def show_main(request):
         "npm": "2506590006",
         "study_program": "S1 Ilmu Komputer",
         "bio": (
-            "Mahasiswa Ilmu Komputer Universitas Indonesia yang tertarik "
-            "pada pengembangan perangkat lunak dan pendidikan."
+            "Hi! I'm a second-year student with a growing interest in Product Management and Data Science. I actively explore other areas of computer science through bootcamps, and enjoy collaborating on team-based projects that sharpen my problem solving and adaptability skills"
         ),
         "preview_experiences": Experience.objects.all()[:3],
         "preview_projects": Project.objects.all()[:3],
@@ -23,14 +22,14 @@ def show_main(request):
 
 def show_experience(request):
     context = {
-        "name": "Kireina",
+        "name": "Kireina Naura Alifa",
         "experience_list": Experience.objects.all(),
     }
     return render(request, "experience.html", context)
 
 def show_projects(request):
     context = {
-        "name": "Kireina",
+        "name": "Kireina Naura Alifa",
         "project_list": Project.objects.all(),
     }
     return render(request, "projects.html", context)
