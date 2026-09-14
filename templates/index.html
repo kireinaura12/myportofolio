@@ -85,85 +85,108 @@
         </section>
 
         <section class="background" id="background">
-            <div class="container background-grid">
-                <div class="background-education">
-                    <div class="background-title">
-                        <h2>Education</h2>
+            <div class="container background">
+                <h2 class="background-heading">Education</h2>
+
+                <div class="education-track">
+                    <div class="education-item">
+                        <div class="education-marker-wrap">
+                            <span class="education-marker">✦</span>
+                        </div>
+                        <p class="education-year">2025 – present</p>
+                        <div class="education-card">
+                            <div class="education-card-header">
+                                <h4>Universitas Indonesia</h4>
+                                <p class="education-major">Computer Science, Faculty of Computer Science</p>
+                            </div>
+                            <div class="education-card-body"></div>
+                        </div>
                     </div>
-                    <div class="background-body">
-                        <ul>
-                            <li>
-                                <h4>Computer Science, Universitas Indonesia</h4>
-                                <p>2025 – Present</p>
-                            </li>
-                            <li>
+
+                    <div class="education-item">
+                        <div class="education-marker-wrap">
+                            <span class="education-marker">✦</span>
+                        </div>
+                        <p class="education-year">2022 – 2025</p>
+                        <div class="education-card">
+                            <div class="education-card-header">
                                 <h4>State Senior High School 9 Bekasi</h4>
-                                <p>2022 – 2025</p>
-                            </li>
-                        </ul>
+                                <p class="education-major">Science Major</p>
+                            </div>
+                            <div class="education-card-body"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="background-experience">
-                    <div class="background-title">
-                        <h2>Experience</h2>
-                    </div>
-                    <div class="background-body">
-                        <ul>
-                            <li>
-                                <h4>Staff of Community Service Department, BEM Fasilkom UI</h4>
-                                <p>May 2026 – Present</p>
-                                <p>Managed internal and external community service programs by assisting in planning, coordination, and executing social impact initiatives.</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            </div>
         </section>
 
         <!-- divider -->
         <div class="divider">
             <span class="divider-track">
-                Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull;
-                Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull;
+                Experience &bull; Experience &bull; Experience &bull; Experience &bull; Experience &bull; Experience &bull; Experience &bull;
+                Experience &bull; Experience &bull; Experience &bull; Experience &bull; Experience &bull; Experience &bull; Experience &bull;
             </span>
         </div>
 
-        <!-- PROJECTS -->
-        <section class="projects" id="projects">
-            <div class="container projects-grid">
-                <div class="project-card">
-                    <div class="project-thumb">
-                        <img src="/static/img/project 1.jpg" alt="Photo project 1">
-                    </div>
-                    <div class="project-details">
-                        <div>
-                            <h3 class="project-name">Enhanced Public Health through Air Quality Maintenance</h3>
-                            <p class="project-desc">A data analysis project using SAP Analytics Cloud that explores the correlation between industrialization in ASEAN's growing economies and its impact on particulate matter pollution, aiming to address the pollution crisis through strategic interventions.</p>
-                        </div>
-                        <a href="" class="project-btn">See Details →</a>
+        <!-- EXPERIENCE PREVIEW -->
+        <section class="preview-section" id="experience">
+            <div class="container">
+                <div class="preview-header">
+                    <h2>Experience</h2>
+                    <a href="{% url 'main:show_experience' %}" class="project-btn">See More →</a>
+                </div>
+
+                <div class="preview-grid">
+                    <div class="preview-track">
+                        {% for experience in preview_experiences %}
+                            <div class="preview-card">
+                                <div class="preview-thumb">
+                                    <img src="{{ experience.thumbnail }}" alt="{{ experience.title }}">
+                                </div>
+                                <div class="preview-details">
+                                    <h3>{{ experience.title }}</h3>
+                                    <p>{{ experience.description|truncatewords:15 }}</p>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p class="empty-state">Belum ada pengalaman yang ditambahkan.</p>
+                        {% endfor %}
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-thumb">
-                        <img src="/static/img/project 2.png" alt="Photo project 1">
-                    </div>
-                    <div class="project-details">
-                        <div>
-                            <h3 class="project-name">NexTask</h3>
-                            <p class="project-desc">A productivity app concept aimed at helping students organize tasks and improve focus. Built as a final project for Winter Club's Product Management course by Generation </p>
-                        </div>
-                        <a href="https://docs.google.com/presentation/d/1ujp4LyZzzOBlxrO20Vn9Jtv7hyouLycDtJyVee1cJZY/edit?usp=sharing" class="project-btn">See Details →</a>
-                    </div>
+            </div>
+        </section>
+
+        <!-- divider -->
+        <div class="divider">
+            <span class="divider-track">
+                Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull;
+                Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull; Projects &bull;
+            </span>
+        </div>
+
+        <!-- PROJECTS PREVIEW -->
+        <section class="preview-section" id="projects">
+            <div class="container">
+                <div class="preview-header">
+                    <h2>Projects</h2>
+                    <a href="{% url 'main:show_projects' %}" class="project-btn">See More →</a>
                 </div>
-                <div class="project-card">
-                    <div class="project-thumb">
-                        <img src="/static/img/template project3.png" alt="Photo project 1">
-                    </div>
-                    <div class="project-details">
-                        <div>
-                            <h3 class="project-name">Project 3</h3>
-                            <p class="project-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                        </div>
-                        <a href="https://docs.google.com/presentation/d/1ujp4LyZzzOBlxrO20Vn9Jtv7hyouLycDtJyVee1cJZY/edit?usp=sharing" class="project-btn">See Details →</a>
+
+                <div class="preview-grid">
+                    <div class="preview-track">
+                        {% for project in preview_projects %}
+                            <div class="preview-card">
+                                <div class="preview-thumb">
+                                    <img src="{{ project.thumbnail }}" alt="{{ project.name }}">
+                                </div>
+                                <div class="preview-details">
+                                    <h3>{{ project.name }}</h3>
+                                    <p>{{ project.description|truncatewords:15 }}</p>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p class="empty-state">Belum ada proyek yang ditambahkan.</p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

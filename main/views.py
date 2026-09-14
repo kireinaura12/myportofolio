@@ -8,13 +8,15 @@ from main.models import Experience, Project
 
 def show_main(request):
     context = {
-        "name": "Kireina",
+        "name": "Kireina Naura Alifa",
         "npm": "2506590006",
         "study_program": "S1 Ilmu Komputer",
         "bio": (
             "Mahasiswa Ilmu Komputer Universitas Indonesia yang tertarik "
             "pada pengembangan perangkat lunak dan pendidikan."
         ),
+        "preview_experiences": Experience.objects.all()[:3],
+        "preview_projects": Project.objects.all()[:3],
     }
     return render(request, "index.html", context)
 
