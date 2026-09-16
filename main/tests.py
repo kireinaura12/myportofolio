@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from main.models import Experience, Project
+from main.models import Experience, Projects
 
 
 class MainTest(TestCase):
@@ -12,7 +12,7 @@ class MainTest(TestCase):
             description="Membantu mahasiswa memahami pengembangan web.",
             category="part-time",
         )
-        self.project = Project.objects.create(
+        self.project = Projects.objects.create(
             name="NexTask",
             description="Productivity app untuk membantu mahasiswa mengatur tugas.",
             thumbnail="/static/img/project2.png",

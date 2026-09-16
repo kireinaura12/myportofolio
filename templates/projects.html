@@ -1,48 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+{% block meta %}
     <title>Projects - {{ name }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Poppins:wght@400;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-
-    <!-- HEADER -->
-    <header class="site-header">
-        <div class="container">
-            <a href="{% url 'main:show_main' %}" class="brand">
-                <img class="star" src="/static/img/star.png" alt="Star icon">
-                <span class="brand-text">{{ name }}</span>
-            </a>
-            <nav>
-                <a href="{% url 'main:show_experience' %}">Experience</a>
-                <a href="{% url 'main:show_projects' %}">Projects</a>
-            </nav>
-        </div>
-    </header>
-
+{% endblock meta %}
+{% block content %}
     <main>
         <section class="projects" id="projects">
             <div class="container">
-                <p class="section-kicker">Some of my work so far</p>
-                <h1>Projects</h1>
+                <div class="project-header">
+                    <div>
+                        <p class="section-kicker">Some of my work so far</p>
+                        <h1>Projects</h1>
+                    </div>
+                    <a href="{% url 'main:create_project' %}" class="button project-add-button">
+                        <span>+</span> Tambah Proyek
+                    </a>
+                </div>
 
-                <div class="projects-grid">
+                <form method="GET" class="project-search">
+                    <input
+                        type="text"
+                        name="title"
+                        class="project-search__input"
+                        placeholder="Cari berdasarkan nama proyek"
+                        value="{{ title_query }}">
+                    <button type="submit" class="button">Cari</button>
+                </form>
+
+                <div class="project-grid">
                     {% for project in project_list %}
                         <div class="project-card">
-                            <div class="project-thumb">
-                                <img src="{{ project.thumbnail }}" alt="Photo of {{ project.name }}">
-                            </div>
+                            {% if project.project_image_url %}
+                                <div class="project-thumb">
+                                    <img src="{{ project.project_image_url }}" alt="Photo of {{ project.title }}">
+                                </div>
+                            {% endif %}
                             <div class="project-details">
                                 <div>
-                                    <h3 class="project-name">{{ project.name }}</h3>
+                                    <h3>{{ project.title }}</h3>
+                                    <p class="project-tech">{{ project.tech_stack }}</p>
                                     <p class="project-desc">{{ project.description }}</p>
                                 </div>
-                                <a href="{{ project.link }}" class="project-btn">See Details →</a>
+                                <div class="project-card-actions">
+                                    {% if project.project_url %}
+                                        <a href="{{ project.project_url }}" class="button" target="_blank">Lihat Proyek</a>
+                                    {% endif %}
+                                    <button type="button" class="button button-danger" popovertarget="delete-modal-{{ project.id }}">
+                                        Hapus Proyek
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="delete-modal-{{ project.id }}" popover class="project-delete-modal">
+                            <button popovertarget="delete-modal-{{ project.id }}" popovertargetaction="hide" class="project-delete-modal__backdrop" aria-label="Close"></button>
+                            <div class="project-delete-modal__content">
+                                <button popovertarget="delete-modal-{{ project.id }}" popovertargetaction="hide" class="project-delete-modal__close">&times;</button>
+                                <h2>Hapus "{{ project.title }}"?</h2>
+                                <p>Tindakan ini tidak bisa dibatalkan.</p>
+                                <div class="project-delete-modal__actions">
+                                    <button popovertarget="delete-modal-{{ project.id }}" popovertargetaction="hide" class="button button-secondary">Batal</button>
+                                    <form method="POST" action="{% url 'main:delete_project' project.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="button button-danger">Ya, Hapus</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     {% empty %}
@@ -52,11 +73,4 @@
             </div>
         </section>
     </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock content %}
