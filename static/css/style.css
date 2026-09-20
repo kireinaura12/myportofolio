@@ -84,7 +84,7 @@ h1, .brand {
     font-weight: 700;
 
     padding: 0.5rem 1.25rem;
-    border-radius: 50px;
+    border-radius: 50px 50px 0px 50px;
 
     transition:
         transform 0.2s ease,
@@ -597,6 +597,30 @@ h1, .brand {
 .button-secondary {
     background: var(--button-secondary);
 }
+
+.messages {
+    position: fixed;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: min(90%, 480px);
+    margin-top: 0;
+    transition: opacity 0.4s ease;
+}
+
+.message.hide {
+    opacity: 0;
+}
+
+.message {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    background: #e6f7ec;
+    color: #1d6b3a;
+}
+  
+.message-error { background: #fdeaea; color: #a12a2a; }
 
 @media (max-width: 600px) {
     .profile-grid {

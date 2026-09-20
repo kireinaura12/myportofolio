@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
-  {% extends 'base.html' %}
-  {% block content %}
+{% extends 'base.html' %}
+{% block meta %}
+    <title>Profile - {{ name }}</title>
+{% endblock meta %}
+{% block content %}
     <main>
         <!-- HERO SECTION -->
         <section class="hero">
@@ -169,6 +169,4 @@
             </div>
         </section>
     </main>
-  {% endblock content %}
-</body>
-</html>
+{% endblock content %}

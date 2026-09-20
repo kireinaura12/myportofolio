@@ -7,14 +7,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Poppins:wght@400;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
-    {% block meta %} {% endblock meta %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block meta %}
+        <title>{{ name }}</title>
+    {% endblock meta %}
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#aboutme" class="brand">
-                <img class="star" src="/static/img/star.png" alt="Star icon">
+            <a href="{% url 'main:show_main' %}" class="brand">
+                <img class="star" src="{% static 'img/star.png' %}" alt="Star icon">
                 <span class="brand-text">{{ name }}</span>
             </a>
             <nav>
@@ -24,11 +26,32 @@
             </nav>
         </div>
     </header>
+
+    {% if messages %}
+        <div class="container messages" id="messages">
+            {% for message in messages %}
+                <p class="message message-{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% block content %} {% endblock content %}
+
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+            <p>&copy; {% now "Y" %} {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
+
+    <script>
+        const box = document.getElementById("messages");
+        if (box) {
+            setTimeout(() => {
+                box.classList.add("hide");
+                setTimeout(() => box.remove(), 400);
+            }, 2500);
+        }
+    </script>
+    
 </body>
 </html>
