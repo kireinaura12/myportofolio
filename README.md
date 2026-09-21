@@ -21,3 +21,19 @@ Claude.ai:
 - memberikan saran terkait struktur HTML dan CSS
 - membantu dalam menyesuaikan layout tampilan web khususnya agar responsive pada mobile
 - menambahkan hover yang lebih menarik
+
+### Tugas 3
+1. Dengan modelform, kita dapat membuat form langsung dari model, tanpa harus menulis fieldnya satu persatu. Selain itu Django juga dapat langsung memvaliadsi type input yang sesuai dan mengirimkan pesan error apabila input kosong atau tidak sesuai. 
+{% csrf_token %} merupakan token rahasia yang ditaruh django, dimana django akan mengecek token itu saat form dikirim. Kalau tokennya tidak ada atau salah, request akan ditolak.
+2. Karena JSON lebih ringkas dan mudah dibaca oleh manusia dibandingkan XML
+3. Browser membuka /api/projects/, Django menjalankan fungsi get_projects_json. Lalu fungsi ini mengambil data projects dari database, lalu mengubahnya menjadi teks JSON dengan serializers.serialize, yang kemudian teks itu dikirim ke browser.
+Serialization diperlukan karena data dari database berbentuk objek Python, sedangkan yang bisa dikirim lewat internet hanyalah teks. Oleh karena itu data diubah dulu menjadi JSON, sehingga format teks dapat dibaca oleh bahasa pemrograman.
+
+# AI Disclosure
+Dalam pengerjaan project ini, saya menggunakan:
+Claude.ai: 
+- membantu melakukan debugging
+- memberikan saran terkait struktur HTML dan CSS
+- membantu menulis ulang `tests.py` agar sesuai dengan model dan view yang baru
+- membantu menjelaskan alur view JSON
+
