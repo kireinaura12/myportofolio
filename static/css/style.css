@@ -556,7 +556,8 @@ h1, .brand {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea
+.form-group select {
     width: 100%;
     box-sizing: border-box;
     padding: 0.7rem;
@@ -569,7 +570,8 @@ h1, .brand {
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focu
+.form-group select:focus {
     outline: 2px solid var(--accent);
     border-color: var(--accent);
 }
@@ -621,6 +623,7 @@ h1, .brand {
 }
   
 .message-error { background: #fdeaea; color: #a12a2a; }
+
 
 @media (max-width: 600px) {
     .profile-grid {
@@ -1072,7 +1075,7 @@ h1, .brand {
     border: 0;
     padding: 0;
     background: transparent;
-    color: var(--text-muted);
+    color: var(--background);
     font-size: 1.8rem;
     line-height: 1;
     cursor: pointer;

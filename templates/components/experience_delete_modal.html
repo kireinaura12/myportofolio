@@ -1,38 +1,38 @@
 <button type="button"
-            class="button button-danger"
-            popovertarget="delete-project-{{ project.id }}"
-            aria-label="Hapus {{ project.title }}"
-            title="Hapus proyek">
-        Hapus Proyek
+        class="button button-danger"
+        popovertarget="delete-experience-{{ experience.id }}"
+        aria-label="Hapus {{ experience.title }}"
+        title="Hapus pengalaman">
+    Hapus Pengalaman
 </button>
-<div id="delete-project-{{ project.id }}"
+<div id="delete-experience-{{ experience.id }}"
      class="project-delete-modal"
      popover="auto"
      role="dialog"
      aria-modal="true"
-     aria-labelledby="delete-project-title-{{ project.id }}">
+     aria-labelledby="delete-experience-title-{{ experience.id }}">
     <button type="button"
             class="project-delete-modal__backdrop"
-            popovertarget="delete-project-{{ project.id }}"
+            popovertarget="delete-experience-{{ experience.id }}"
             popovertargetaction="hide"
             aria-label="Tutup konfirmasi hapus"></button>
     <div class="project-delete-modal__content">
         <button type="button"
                 class="project-delete-modal__close"
-                popovertarget="delete-project-{{ project.id }}"
+                popovertarget="delete-experience-{{ experience.id }}"
                 popovertargetaction="hide"
                 aria-label="Tutup konfirmasi hapus">×</button>
-        <h2 id="delete-project-title-{{ project.id }}">Hapus Projek?</h2>
+        <h2 id="delete-experience-title-{{ experience.id }}">Hapus Pengalaman?</h2>
         <p>
             Apakah Anda yakin ingin menghapus
-            <strong>{{ project.title }}</strong>?
+            <strong>{{ experience.title }}</strong>?
         </p>
         <div class="project-delete-modal__actions">
             <button type="button"
                     class="button button-secondary"
-                    popovertarget="delete-project-{{ project.id }}"
+                    popovertarget="delete-experience-{{ experience.id }}"
                     popovertargetaction="hide">Batal</button>
-            <form method="post" action="{% url 'main:delete_project' project.id %}">
+            <form method="post" action="{% url 'main:delete_experience' experience.id %}">
                 {% csrf_token %}
                 <button type="submit" class="button button-danger">Ya, Hapus</button>
             </form>

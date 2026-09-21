@@ -38,31 +38,15 @@
                                 <div>
                                     <h3>{{ project.title }}</h3>
                                     <p class="project-tech">{{ project.tech_stack }}</p>
+                                    <p class="project-date">{{ project.project_date|date:"F Y" }}</p>
                                     <p class="project-desc">{{ project.description }}</p>
                                 </div>
                                 <div class="project-card-actions">
                                     {% if project.project_url %}
                                         <a href="{{ project.project_url }}" class="button" target="_blank">Lihat Proyek</a>
                                     {% endif %}
-                                    <button type="button" class="button button-danger" popovertarget="delete-modal-{{ project.id }}">
-                                        Hapus Proyek
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="delete-modal-{{ project.id }}" popover class="project-delete-modal">
-                            <button popovertarget="delete-modal-{{ project.id }}" popovertargetaction="hide" class="project-delete-modal__backdrop" aria-label="Close"></button>
-                            <div class="project-delete-modal__content">
-                                <button popovertarget="delete-modal-{{ project.id }}" popovertargetaction="hide" class="project-delete-modal__close">&times;</button>
-                                <h2>Hapus "{{ project.title }}"?</h2>
-                                <p>Tindakan ini tidak bisa dibatalkan.</p>
-                                <div class="project-delete-modal__actions">
-                                    <button popovertarget="delete-modal-{{ project.id }}" popovertargetaction="hide" class="button button-secondary">Batal</button>
-                                    <form method="POST" action="{% url 'main:delete_project' project.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit" class="button button-danger">Ya, Hapus</button>
-                                    </form>
+                                    <a href="{% url 'main:update_project' project.id %}" class="button button-secondary">Edit</a>
+                                    {% include 'components/project_delete_modal.html' %}
                                 </div>
                             </div>
                         </div>

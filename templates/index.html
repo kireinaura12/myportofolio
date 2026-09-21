@@ -154,10 +154,10 @@
                         {% for project in preview_projects %}
                             <div class="preview-card">
                                 <div class="preview-thumb">
-                                    <img src="{{ project.thumbnail }}" alt="{{ project.name }}">
+                                    <img src="{{ project.project_image_url }}" alt="{{ project.title }}">
                                 </div>
                                 <div class="preview-details">
-                                    <h3>{{ project.name }}</h3>
+                                    <h3>{{ project.title }}</h3>
                                     <p>{{ project.description|truncatewords:15 }}</p>
                                 </div>
                             </div>

@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from datetime import date
 
 class Experience(models.Model):
     EXPERIENCE_CHOICES = [
@@ -32,6 +33,7 @@ class Projects(models.Model):
     tech_stack = models.CharField(max_length=255)
     project_url = models.URLField(blank=True)
     project_image_url = models.URLField(blank=True, max_length=500)
+    project_date = models.DateField(default=date.today)
 
     def __str__(self):
         return self.title
