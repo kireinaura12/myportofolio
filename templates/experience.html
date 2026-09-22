@@ -11,9 +11,11 @@
                         <p class="section-kicker">Perjalanan saya sejauh ini</p>
                         <h1>Experience</h1>
                     </div>
-                    <a href="{% url 'main:create_experience' %}" class="button project-add-button">
-                        <span>+</span> Tambah Pengalaman
-                    </a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'main:create_experience' %}" class="button project-add-button">
+                            <span>+</span> Tambah Pengalaman
+                        </a>
+                    {% endif %}
                 </div>
 
                 <form method="GET" class="project-search">
@@ -55,8 +57,10 @@
                                 {% endif %}
 
                                 <div class="project-card-actions">
-                                    <a href="{% url 'main:update_experience' experience.id %}" class="button button-secondary">Edit</a>
-                                    {% include 'components/experience_delete_modal.html' %}
+                                    {% if user.is_superuser %}
+                                        <a href="{% url 'main:update_experience' experience.id %}" class="button button-secondary">Edit</a>
+                                        {% include 'components/experience_delete_modal.html' %}
+                                    {% endif %}
                                 </div>
 
                             </div>

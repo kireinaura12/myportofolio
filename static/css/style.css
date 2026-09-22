@@ -1092,6 +1092,28 @@ h1, .brand {
     background: #b42318;
 }
 
+.star-form {
+    display: inline;
+}
+
+.button-star {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--button-secondary);
+}
+
+.button-star.is-starred {
+    background: var(--background);
+}
+
+.star-count {
+    padding: 0.05rem 0.4rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    font-size: 0.8rem;
+}
+
 @media (max-width: 600px) {
     .project-header {
         align-items: flex-start;
