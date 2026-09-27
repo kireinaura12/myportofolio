@@ -37,3 +37,10 @@ Claude.ai:
 - membantu menulis ulang `tests.py` agar sesuai dengan model dan view yang baru
 - membantu menjelaskan alur view JSON
 
+### Tugas 4
+# AI Disclosure
+Dalam pengerjaan project ini, saya menggunakan:
+Claude.ai:
+- membantu untuk memahami alur authorization
+- mengidentifikasi bug seperti fitur update yang sebelumnya lupa saya protect server-side
+- memberikan penjelasan konsep Django Group/Permission dan cara membuat custom template tag templatetags/role_tag.py
