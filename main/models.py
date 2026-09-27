@@ -41,3 +41,12 @@ class Projects(models.Model):
 
     def __str__(self):
         return self.title
+
+class Skill(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=50)
+    created_at = models.DateField(default=date.today)
+    img_skill = models.URLField(blank=True, max_length=500)
+
+    def __str__(self):
+        return self.name

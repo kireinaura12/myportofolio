@@ -172,5 +172,33 @@
                 </div>
             </div>
         </section>
+
+        <div class="divider">
+            <div class="divider-track">
+                <span>Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull;</span>
+                <span>Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull; Skill &bull;</span>
+            </div>
+        </div>
+
+        <section class="skills", id="skills">
+            <div class="container">
+                <div class="preview-header">
+                    <h2>Skills</h2>
+                </div>
+                <div class="skill-grid">
+                    {% for skill in skill_list %}
+                    <div class="skill-button" title="{{skill.name}}">
+                        {% if skill.img_skill %}
+                            <img src="{{ skill.img_skill}}" alt="{{skill.name}}" class="skill-icon">
+                        {% endif %}
+                        <span>{{ skill.name }}</span>
+                    </div>
+                    {% empty %}
+                        <p class="empty-state">Belum ada skill yang ditambahkan.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
     </main>
 {% endblock content %}

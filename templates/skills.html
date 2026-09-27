@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block meta %}
+    <title>Skill - {{ name }}</title>
+{% endblock meta %}
+{% block content %}
+
+<main>
+    {% for skill in skill_list %}
+        <p>{ skill.name }</p>
+    {% empty %}
+        <p>Belum ada skill yang ditambahkan.</p>
+    {% endfor %}
+</main>
+{% endblock content %}

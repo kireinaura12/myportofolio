@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput, Textarea, URLInput, DateInput, DateTimeInput
-from main.models import Projects, Experience
+from main.models import Projects, Experience, Skill
 
 
 class ProjectForm(ModelForm):
@@ -100,5 +100,31 @@ class ExperienceForm(ModelForm):
             "ended_at": DateTimeInput(
                 attrs={"type": "datetime-local"},
                 format="%Y-%m-%dT%H:%M",
+            ),
+        }
+
+class SkillForm(ModelForm):
+    class Meta:
+        model = Skill
+        fields = [
+            "name", "img_skill", 
+        ]
+
+        labels = {
+            "name": "Nama Skill",
+            "img_skill": "URL logo skill"
+        }
+
+        widgets = {
+            "name": TextInput(
+                attrs= {
+                    "placeholder": "Python",
+                }
+            ),
+
+            "img_skill": URLInput(
+                attrs= {
+                    "placeholder": "https://drive.google.com/thumbnail?id=...&sz=w1000",
+                }
             ),
         }
