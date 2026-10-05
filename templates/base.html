@@ -19,18 +19,36 @@
                 <img class="star" src="{% static 'img/star.png' %}" alt="Star icon">
                 <span class="brand-text">{{ name }}</span>
             </a>
-            <nav>
-                <a href="{% url 'main:show_main' %}">Profile</a>
-                <a href="{% url 'main:show_experience' %}">Experience</a>
-                <a href="{% url 'main:show_projects' %}">Projects</a>
-                {% if user.is_authenticated %}
-                    <span class="nav-user">{{ user.username }}</span>
-                    <a href="{% url 'main:logout' %}">Logout</a>
-                {% else %}
-                    <a href="{% url 'main:login' %}">Login</a>
-                    <a href="{% url 'main:register' %}">Register</a>
-                {% endif %}
+
+            {% with current=request.resolver_match.url_name %}
+            <nav class="site-nav" aria-label="Navigasi utama">
+                <a href="{% url 'main:show_main' %}"
+                class="site-nav__link{% if current == 'show_main' %} is-active{% endif %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}"
+                class="site-nav__link{% if current == 'show_experience' or current == 'create_experience' or current == 'update_experience' %} is-active{% endif %}">Experience</a>
+                <a href="{% url 'main:show_projects' %}"
+                class="site-nav__link{% if current == 'show_projects' or current == 'create_project' or current == 'update_project' %} is-active{% endif %}">Projects</a>
             </nav>
+            {% endwith %}
+
+            <div class="site-auth">
+                {% if user.is_authenticated %}
+                    <details class="user-menu">
+                        <summary class="user-menu__trigger">
+                            <span>{{ user.username }}</span>
+                            <span class="user-menu__dot" aria-hidden="true"></span>
+                        </summary>
+                        <div class="user-menu__panel">
+                            <a href="{% url 'main:logout' %}" class="user-menu__logout">
+                                Logout <span aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </details>
+                {% else %}
+                    <a href="{% url 'main:login' %}" class="nav-btn nav-btn--outline">Login</a>
+                    <a href="{% url 'main:register' %}" class="nav-btn nav-btn--solid">Register</a>
+                {% endif %}
+            </div>
         </div>
     </header>
 
@@ -59,6 +77,16 @@
                 box.classList.add("hide");
                 setTimeout(() => box.remove(), 400);
             }, 2500);
+        }
+
+        const userMenu = document.querySelector('.user-menu');
+        if (userMenu) {
+            document.addEventListener('click', function (event) {
+                if (!userMenu.contains(event.target)) userMenu.removeAttribute('open');
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') userMenu.removeAttribute('open');
+            });
         }
     </script>
     
