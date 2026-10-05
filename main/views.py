@@ -42,18 +42,10 @@ def show_projects(request):
     return render(request, "projects.html", context)
 
 def show_experience(request):
-    json_response = get_experiences_json(request)
-
-    deserialized = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    experiences = [item.object for item in deserialized]
-
     context = {
         "name": "Kireina Naura Alifa",
-        "experience_list": experiences,
         "title_query": request.GET.get("title", "").strip(),
+        "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)
 
@@ -104,6 +96,24 @@ def create_project_ajax(request):
         project = form.save()
         return JsonResponse(
             {"message": "Proyek berhasil ditambahkan.", "pk": str(project.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
+
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan pengalaman."},
+            status=403,
+        )
+
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        experience = form.save()
+        return JsonResponse(
+            {"message": "Pengalaman berhasil ditambahkan.", "pk": str(experience.id)},
             status=201,
         )
 
@@ -189,7 +199,7 @@ def update_experience(request, experience_id):
 def get_projects_json(request):
     title_query = request.GET.get("title", "").strip()
     projects = Projects.objects.prefetch_related('starred_by').order_by("-project_date", "title")
-    
+
     if title_query:
         projects = projects.filter(title__icontains=title_query)
 
@@ -223,8 +233,21 @@ def get_experiences_json(request):
     if title_query:
         experiences = experiences.filter(title__icontains=title_query)
 
-    experiences_json = serializers.serialize("json", experiences)
-    return HttpResponse(experiences_json, content_type="application/json")
+    data = []
+    for experience in experiences:
+        data.append({
+            "pk": str(experience.id),
+            "fields": {
+                "title": experience.title,
+                "description": experience.description,
+                "category": experience.category,
+                "category_display": experience.get_category_display(),
+                "thumbnail": experience.thumbnail or "",
+                "is_ongoing": experience.is_ongoing,
+            },
+        })
+
+    return JsonResponse(data, safe=False)
 
 def get_skills_json(request):
     title_query = request.GET.get("title", "").strip()
