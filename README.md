@@ -44,3 +44,20 @@ Claude.ai:
 - membantu untuk memahami alur authorization
 - mengidentifikasi bug seperti fitur update yang sebelumnya lupa saya protect server-side
 - memberikan penjelasan konsep Django Group/Permission dan cara membuat custom template tag templatetags/role_tag.py
+
+### Tugas 5
+1. Debouncing adalah teknik yang digunakan untuk menunda eksekusi suatu fungsi sampai user berhenti melakukan suatu aktivitas dalam waktu tertentu. Pada fitur pencarian yang menggunakan AJAX, debouncing digunakan karena event input akan dipanggil setiap kali user mengetik satu karakter. Misal ketika user mengetik kata “project”, event input dapat terjadi sebanyak 7 kali. Jika setiap event langsung menjalankan fungsi pencarian, browser akan mengirim 7 request ke server, padahal user kemungkinan hanya membutuhkan hasil pencarian untuk kata “project”. Sehingga debouncing digunakan untuk mengurangi request yang tidak diperlukan, mengurangi beban server dan jaringan, serta membuat tampilan pencarian lebih stabil.
+2. Karena ketika fetch() dipanggil, fungsi tersebut mengembalikan sebuah Promise, yaitu objek yang mewakili hasil yang akan tersedia di waktu yg akan datang. Oleh karena itu, digunakan await untuk menunggu sampai Promise tersebut selesai sebelum melanjutkan proses berikutnya. Jika tidak menggunakan await, fetch() masih menghasilkan Promise, bukan hasil response dari server, sehingga data belum bisa langsung digunakan.
+3. XSS adalah serangan ketika seseorang memasukkan kode HTML atau JavaScript berbahaya ke dalam suatu website, kemudian kode tersebut dijalankan oleh browser. dibandingkan dengan template Django, AJAX/JavaScript lebih rentan karena pada template Django secara default dilakukan HTML escaping, sehingga karakter tertentu seperti < dan > diubah menjadi bentuk yang tidak akan dianggap sebagai tag HTML oleh browser. Sedangkan pada JavaScript, hal tersebut tidak dilakukan secara otomatis sehingga developer perlu melakukan escaping secara manual, misalnya menggunakan escapeHtml(), atau menggunakan textContent ketika hanya ingin menampilkan teks.
+
+# AI Disclosure
+Dalam pengerjaan project ini, saya menggunakan:
+Claude.ai: 
+- membantu melakukan debugging
+- membantu merapikan CSS dan layout pada project card
+- membantu membuat tampilan navbar baru
+- mengidentifikasi bagian kode yang perlu menggunakan escapeHTML()
+- menganalisis checklist tugas yang belum dikerjakan
+- menjelaskan penggunaan strip_tags, termasuk penempatan dan cara penggunaannya dalam kode
+ChatGPT:
+- membantu menjelaskan konsep debouncing, await pada fetch(), dan serangan XSS, serta perbedaannya dalam penerapan AJAX/JavaScript dan template Django
