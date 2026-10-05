@@ -66,11 +66,17 @@ class ProjectForm(ModelForm):
         return title
 
     def clean_tech_stack(self):
-        return strip_tags(self.cleaned_data["tech_stack"]).strip()
+        tech_stack = strip_tags(self.cleaned_data["tech_stack"]).strip()
+        if not tech_stack:
+            raise ValidationError("Teknologi tidak boleh kosong atau hanya berisi tag HTML.")
+        return tech_stack
 
     def clean_description(self):
-        return strip_tags(self.cleaned_data["description"]).strip()    
-
+        description = strip_tags(self.cleaned_data["description"]).strip()
+        if not description:
+            raise ValidationError("Deskripsi tidak boleh kosong atau hanya berisi tag HTML.")
+        return description
+    
 class ExperienceForm(ModelForm):
     class Meta:
         model = Experience

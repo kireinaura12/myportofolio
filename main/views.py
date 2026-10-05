@@ -188,8 +188,8 @@ def update_experience(request, experience_id):
 
 def get_projects_json(request):
     title_query = request.GET.get("title", "").strip()
-    projects = Projects.objects.prefetch_related('starred_by').all()
-
+    projects = Projects.objects.prefetch_related('starred_by').order_by("-project_date", "title")
+    
     if title_query:
         projects = projects.filter(title__icontains=title_query)
 
@@ -231,8 +231,7 @@ def get_skills_json(request):
     skills = Skill.objects.all()
 
     if title_query:
-        skills = skills.filter(title__icontains=title_query)
-
+        skills = skills.filter(name__icontains=title_query)
     skill_json = serializers.serialize("json", skills)
     return HttpResponse(skill_json, content_type="application/json")
 

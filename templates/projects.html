@@ -62,6 +62,7 @@
     // Konfigurasi
     const BASE_PROJECTS_ENDPOINT = "{% url 'main:get_projects_json' %}";
     const IS_SUPERUSER = "{{ user.is_superuser|yesno:'true,false' }}" === "true";
+    const IS_EDITOR = "{{ user|has_group:'Editor'|yesno:'true,false' }}" === "true";
     let projectsAbortController;
 
     // Elemen DOM
@@ -112,8 +113,13 @@
         const deleteUrl = "{% url 'main:delete_project' '00000000-0000-0000-0000-000000000000' %}"
             .replace('00000000-0000-0000-0000-000000000000', projectId);
         const starUrl = "{% url 'main:toggle_star' '00000000-0000-0000-0000-000000000000' %}"
+                    .replace('00000000-0000-0000-0000-000000000000', projectId);
+        const editUrl = "{% url 'main:update_project' '00000000-0000-0000-0000-000000000000' %}"
             .replace('00000000-0000-0000-0000-000000000000', projectId);
 
+        const editHtml = (IS_SUPERUSER || IS_EDITOR)
+            ? `<a href="${editUrl}" class="button button-secondary">Edit</a>`
+            : '';
         const deleteHtml = IS_SUPERUSER 
             ? `<form method="post" action="${deleteUrl}" style="display:inline;">
                 {% csrf_token %}
@@ -124,7 +130,7 @@
         const isStarredClass = project.is_starred ? " is-starred" : "";
         const starText = project.is_starred ? "Unstar" : "Star";
         const starTitle = project.star_count > 0 
-            ? `Dibintangi oleh ${escapeHtml(project.starred_by_names)}` 
+            ? `Dibintangi oleh ${project.starred_by_names}` 
             : "Jadilah yang pertama memberi star";
 
         // Komponen card
@@ -136,6 +142,7 @@
             <div class="project-card-actions">
                 <div class="project-actions">
                     ${urlHtml}
+                    ${editHtml}
                     
                     <form method="post" action="${starUrl}" class="star-form">
                         {% csrf_token %}
@@ -272,7 +279,7 @@
         searchProjects();
     });
 
-    fetchProjects();
+    fetchProjects(searchInput.value.trim());
     </script>
 
 {% endblock content %}
