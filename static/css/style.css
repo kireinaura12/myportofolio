@@ -556,7 +556,7 @@ h1, .brand {
 }
 
 .form-group input,
-.form-group textarea
+.form-group textarea,
 .form-group select {
     width: 100%;
     box-sizing: border-box;
@@ -570,7 +570,7 @@ h1, .brand {
 }
 
 .form-group input:focus,
-.form-group textarea:focu
+.form-group textarea:focus,
 .form-group select:focus {
     outline: 2px solid var(--accent);
     border-color: var(--accent);
@@ -1237,7 +1237,6 @@ h1, .brand {
     background: white;
 }
 
-/* toast */
 .toast-component {
     position: fixed;
     inset: auto 2rem 2rem auto;
@@ -1249,8 +1248,8 @@ h1, .brand {
     align-items: center;
     gap: 1rem;
     transition: all 0.3s ease;
-    background-color: var(--paper);
-    border: 1px solid var(--line);
+    background-color: var(--background);
+    border: 1px solid var(--accent);
     color: inherit;
 }
 
@@ -1278,13 +1277,189 @@ h1, .brand {
 
 .toast-message {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--text);
 }
 
-/* Modifikasi border kiri berdasarkan tipe notifikasi */
 .toast-success { border-left: 4px solid #22c55e; }
 .toast-error { border-left: 4px solid #b42318; }
 .toast-normal { border-left: 4px solid var(--accent); }
+
+.project-tile {
+    --tile-bg: #625556;
+    --tile-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.65rem 0.65rem 1rem;
+    background: var(--tile-bg);
+    border-radius: var(--tile-radius);
+    color: var(--text);
+}
+
+.project-tile__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    max-height: 220px;
+    background: #d9d9d9;       
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.project-tile__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-tile__badge-tab {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 0 0.45rem 0.55rem;
+    background: var(--tile-bg);
+    border-bottom-left-radius: 18px;
+}
+
+.project-tile__badge-tab::before,
+.project-tile__badge-tab::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    background: radial-gradient(circle at 0 100%, transparent 17.5px, var(--tile-bg) 18px);
+}
+.project-tile__badge-tab::before { top: 0; left: -18px; }
+.project-tile__badge-tab::after  { right: 0; bottom: -18px; }
+
+.project-tile__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.8rem;
+    border: 0;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--button-primary) 55%, var(--tile-bg));
+    color: var(--text);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.project-tile__badge:hover { transform: translateY(-2px); }
+.project-tile__badge.is-starred { background: var(--button-primary); }
+
+.project-tile__body {
+    flex: 1;
+    padding: 0 0.6rem;
+}
+.project-tile__title {
+    margin-bottom: 0.2rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.2;
+}
+.project-tile__date {
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+.project-tile__desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.project-tile__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 0.6rem 0.4rem;
+}
+.project-tile__link {
+    width: 100%;
+    text-align: center;
+    background: var(--button-secondary);
+    color: var(--background);
+    border-bottom-right-radius: 0;
+}
+.project-tile__admin {
+    display: flex;
+    gap: 0.5rem;
+}
+.project-tile__admin > * { flex: 1; }
+.project-tile__admin .button {
+    width: 100%;
+    text-align: center;
+    font-size: 0.85rem;
+}
+.project-tile__edit {
+    background: var(--accent);
+    color: var(--background);
+}
+.project-tile__delete {
+    background: var(--button-primary);
+    color: var(--text);
+}
+
+.project-tile__body .experience-category {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.project-form-modal__content {
+    background: var(--accent);
+    border: 0;
+    color: var(--background);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.35);
+}
+
+.project-form-modal__content h2 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.4rem;
+    color: var(--background);
+}
+
+.project-form-modal__close {
+    color: var(--background);
+}
+
+.project-form-modal__content .form-group label {
+    color: var(--background);
+}
+
+.project-form-modal__content .form-group input,
+.project-form-modal__content .form-group textarea,
+.project-form-modal__content .form-group select {
+    background: var(--text);
+    color: var(--background);
+    border: 0;
+}
+
+.project-form-modal__content .form-group textarea {
+    min-height: 7rem;
+    resize: vertical;
+}
+
+.project-form-modal__content .form-error {
+    color: #7a1d14;
+}
+
+.project-form-modal__actions .button-secondary {
+    background: color-mix(in srgb, var(--background) 45%, var(--accent));
+    color: var(--text);
+}
+
+.project-form-modal__actions .button:not(.button-secondary) {
+    background: var(--background);
+    color: var(--text);
+}
 
 @media (max-width: 600px) {
     .project-header {

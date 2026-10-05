@@ -93,74 +93,74 @@
             .replaceAll("'", '&#39;');
     }
 
-    // Membuat elemen card project
+   
     function buildProjectCardElement(item) {
         const project = item.fields;
         const projectId = item.pk;
 
         const articleElement = document.createElement('article');
-        articleElement.className = 'experience-card';
+        articleElement.className = 'project-tile';
 
-        const imageHtml = project.project_image_url 
-            ? `<img src="${escapeHtml(project.project_image_url)}" alt="Gambar ${escapeHtml(project.title)}" class="project-image">`
+        const imageHtml = project.project_image_url
+            ? `<img src="${escapeHtml(project.project_image_url)}" alt="Gambar ${escapeHtml(project.title)}" class="project-tile__img">`
             : '';
 
-        const urlHtml = project.project_url 
-            ? `<a href="${escapeHtml(project.project_url)}" class="button">Lihat Project</a>`
+        const urlHtml = project.project_url
+            ? `<a href="${escapeHtml(project.project_url)}" class="button project-tile__link" target="_blank" rel="noopener noreferrer">Lihat Project</a>`
             : '';
 
-        // Dummy UUID digunakan untuk digantikan oleh ID asli dari data JSON
-        const deleteUrl = "{% url 'main:delete_project' '00000000-0000-0000-0000-000000000000' %}"
-            .replace('00000000-0000-0000-0000-000000000000', projectId);
-        const starUrl = "{% url 'main:toggle_star' '00000000-0000-0000-0000-000000000000' %}"
-                    .replace('00000000-0000-0000-0000-000000000000', projectId);
-        const editUrl = "{% url 'main:update_project' '00000000-0000-0000-0000-000000000000' %}"
-            .replace('00000000-0000-0000-0000-000000000000', projectId);
+        const DUMMY = '00000000-0000-0000-0000-000000000000';
+        const starUrl = "{% url 'main:toggle_star' '00000000-0000-0000-0000-000000000000' %}".replace(DUMMY, projectId);
+        const editUrl = "{% url 'main:update_project' '00000000-0000-0000-0000-000000000000' %}".replace(DUMMY, projectId);
+        const deleteUrl = "{% url 'main:delete_project' '00000000-0000-0000-0000-000000000000' %}".replace(DUMMY, projectId);
+
+        const starTitle = project.star_count > 0
+            ? `Dibintangi oleh ${project.starred_by_names}`
+            : "Jadilah yang pertama memberi star";
+        const starredClass = project.is_starred ? ' is-starred' : '';
 
         const editHtml = (IS_SUPERUSER || IS_EDITOR)
-            ? `<a href="${editUrl}" class="button button-secondary">Edit</a>`
+            ? `<a href="${editUrl}" class="button project-tile__edit">Edit</a>`
             : '';
-        const deleteHtml = IS_SUPERUSER 
-            ? `<form method="post" action="${deleteUrl}" style="display:inline;">
+
+        const deleteHtml = IS_SUPERUSER
+            ? `<form method="post" action="${deleteUrl}">
                 {% csrf_token %}
-                <button type="submit" class="button button-danger" onclick="return confirm('Yakin ingin menghapus project ini?');">Hapus</button>
+                <button type="submit" class="button project-tile__delete"
+                        onclick="return confirm('Yakin ingin menghapus project ini?');">Hapus</button>
             </form>`
             : '';
 
-        const isStarredClass = project.is_starred ? " is-starred" : "";
-        const starText = project.is_starred ? "Unstar" : "Star";
-        const starTitle = project.star_count > 0 
-            ? `Dibintangi oleh ${project.starred_by_names}` 
-            : "Jadilah yang pertama memberi star";
+        const adminHtml = (editHtml || deleteHtml)
+            ? `<div class="project-tile__admin">${editHtml}${deleteHtml}</div>`
+            : '';
 
-        // Komponen card
-        const completeCardHtml = `
-            ${imageHtml}
-            <h2>${escapeHtml(project.title)}</h2>
-            <span class="experience-category">${escapeHtml(project.tech_stack)}</span>
-            <p class="experience-description">${escapeHtml(project.description)}</p>
-            <div class="project-card-actions">
-                <div class="project-actions">
-                    ${urlHtml}
-                    ${editHtml}
-                    
-                    <form method="post" action="${starUrl}" class="star-form">
-                        {% csrf_token %}
-                        <button type="submit" 
-                                class="button button-star${isStarredClass}"
-                                title="${escapeHtml(starTitle)}">
-                            <span aria-hidden="true">★</span>
-                            ${starText}
-                            <span class="star-count">${project.star_count}</span>
-                        </button>
-                    </form>
+        articleElement.innerHTML = `
+            <div class="project-tile__media">
+                ${imageHtml}
+                <form method="post" action="${starUrl}" class="project-tile__badge-tab">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="project-tile__badge${starredClass}"
+                            title="${escapeHtml(starTitle)}"
+                            aria-label="${escapeHtml(starTitle)}">
+                        <span aria-hidden="true">✦</span> ${project.star_count}
+                    </button>
+                </form>
+            </div>
 
-                    ${deleteHtml}
-                </div>
+            <div class="project-tile__body">
+                <h2 class="project-tile__title">${escapeHtml(project.title)}</h2>
+                <p class="project-tile__date">${escapeHtml(project.project_date)}</p>
+                <span class="experience-category">${escapeHtml(project.tech_stack)}</span>
+                <p class="project-tile__desc">${escapeHtml(project.description)}</p>
+            </div>
+
+            <div class="project-tile__actions">
+                ${urlHtml}
+                ${adminHtml}
             </div>
         `;
-
-        articleElement.innerHTML = completeCardHtml;
         return articleElement;
     }
 

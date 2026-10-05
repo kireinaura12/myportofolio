@@ -221,6 +221,7 @@ def get_projects_json(request):
                 "star_count": starred_users.count(),
                 "is_starred": is_starred,
                 "starred_by_names": starred_by_names,
+                "project_date": project.project_date.strftime("%B %Y"),
             }
         })
 
