@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group, User
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -7,6 +8,7 @@ from main.models import Experience, Projects
 
 class MainTest(TestCase):
     def setUp(self):
+        self.owner = User.objects.create_superuser("owner", password="pass12345")
         self.experience = Experience.objects.create(
             title="Asisten Dosen PBP",
             description="Membantu mahasiswa memahami pengembangan web.",
@@ -20,6 +22,7 @@ class MainTest(TestCase):
             project_image_url="https://example.com/nextask.png",
         )
 
+    # ---------- Halaman utama ----------
     def test_main_url_is_accessible(self):
         response = self.client.get(reverse("main:show_main"))
 
@@ -34,6 +37,7 @@ class MainTest(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
+    # ---------- Experience ----------
     def test_experience_model(self):
         self.assertEqual(str(self.experience), "Asisten Dosen PBP")
         self.assertEqual(self.experience.category, "part-time")
@@ -44,34 +48,49 @@ class MainTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "experience.html")
-        self.assertContains(response, self.experience.title)
-        self.assertContains(response, self.experience.description)
-        self.assertContains(response, "Part-Time")
-        self.assertContains(response, "Sedang berlangsung")
         self.assertContains(response, f'href="{reverse("main:show_main")}"')
 
-    def test_empty_experience_page(self):
-        Experience.objects.all().delete()
-        response = self.client.get(reverse("main:show_experience"))
+    def test_experience_json(self):
+        response = self.client.get(reverse("main:get_experiences_json"))
 
-        self.assertContains(response, "Belum ada pengalaman yang ditambahkan.")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/json")
+        data = response.json()
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0]["fields"]["title"], self.experience.title)
+        self.assertEqual(data[0]["fields"]["category_display"], "Part-Time")
+        self.assertTrue(data[0]["fields"]["is_ongoing"])
+
+    def test_empty_experience_json(self):
+        Experience.objects.all().delete()
+        response = self.client.get(reverse("main:get_experiences_json"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), [])
 
     def test_completed_experience(self):
         self.experience.ended_at = timezone.now()
         self.experience.save()
-        response = self.client.get(reverse("main:show_experience"))
+        response = self.client.get(reverse("main:get_experiences_json"))
 
         self.assertFalse(self.experience.is_ongoing)
-        self.assertContains(response, "Selesai")
-        self.assertNotContains(response, "Sedang berlangsung")
+        self.assertFalse(response.json()[0]["fields"]["is_ongoing"])
+
+    def test_experience_search(self):
+        url = reverse("main:get_experiences_json")
+
+        self.assertEqual(self.client.get(url, {"title": "tidak-ada"}).json(), [])
+        self.assertEqual(len(self.client.get(url, {"title": "asisten"}).json()), 1)
 
     def test_experience_form_page(self):
+        self.client.force_login(self.owner)
         response = self.client.get(reverse("main:create_experience"))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "experience_form.html")
 
     def test_create_experience(self):
+        self.client.force_login(self.owner)
         response = self.client.post(
             reverse("main:create_experience"),
             {
@@ -87,6 +106,7 @@ class MainTest(TestCase):
         self.assertTrue(Experience.objects.filter(title="Magang Data Analyst").exists())
 
     def test_create_experience_invalid(self):
+        self.client.force_login(self.owner)
         response = self.client.post(
             reverse("main:create_experience"),
             {"title": "", "description": "", "category": "internship"},
@@ -96,6 +116,7 @@ class MainTest(TestCase):
         self.assertEqual(Experience.objects.count(), 1)
 
     def test_update_experience(self):
+        self.client.force_login(self.owner)
         url = reverse("main:update_experience", args=[self.experience.id])
 
         get_response = self.client.get(url)
@@ -119,6 +140,7 @@ class MainTest(TestCase):
         self.assertEqual(Experience.objects.count(), 1)
 
     def test_delete_experience(self):
+        self.client.force_login(self.owner)
         url = reverse("main:delete_experience", args=[self.experience.id])
 
         self.assertEqual(self.client.get(url).status_code, 405)
@@ -129,39 +151,33 @@ class MainTest(TestCase):
         self.assertRedirects(response, reverse("main:show_experience"))
         self.assertEqual(Experience.objects.count(), 0)
 
-    def test_experience_json(self):
-        response = self.client.get(reverse("main:get_experiences_json"))
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response["Content-Type"], "application/json")
-        data = response.json()
-        self.assertEqual(len(data), 1)
-        self.assertEqual(data[0]["fields"]["title"], self.experience.title)
-
-    def test_experience_search(self):
-        response = self.client.get(reverse("main:show_experience"), {"title": "tidak-ada"})
-
-        self.assertContains(response, "Belum ada pengalaman yang ditambahkan.")
-
+    # ---------- Projects ----------
     def test_projects_url_is_accessible(self):
         response = self.client.get(reverse("main:show_projects"))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "projects.html")
 
-    def test_projects_page_shows_data(self):
+    def test_projects_page_has_ajax_container(self):
         response = self.client.get(reverse("main:show_projects"))
 
-        self.assertContains(response, self.project.title)
-        self.assertContains(response, self.project.description)
+        self.assertContains(response, 'id="grid"')
+        self.assertContains(response, reverse("api:project-list"))
 
     def test_projects_page_empty_state(self):
-        Projects.objects.all().delete()
         response = self.client.get(reverse("main:show_projects"))
 
-        self.assertContains(response, "Belum ada proyek yang ditambahkan.")
+        self.assertContains(response, "Belum ada proyek yang ditambahkan")
+
+    def test_add_button_only_for_superuser(self):
+        url = reverse("main:show_projects")
+        self.assertNotContains(self.client.get(url), "Tambah Proyek")
+
+        self.client.force_login(self.owner)
+        self.assertContains(self.client.get(url), "Tambah Proyek")
 
     def test_create_project(self):
+        self.client.force_login(self.owner)
         response = self.client.post(
             reverse("main:create_project"),
             {
@@ -178,6 +194,7 @@ class MainTest(TestCase):
         self.assertTrue(Projects.objects.filter(title="Portfolio Website").exists())
 
     def test_update_project(self):
+        self.client.force_login(self.owner)
         url = reverse("main:update_project", args=[self.project.id])
 
         get_response = self.client.get(url)
@@ -202,6 +219,7 @@ class MainTest(TestCase):
         self.assertEqual(Projects.objects.count(), 1)
 
     def test_delete_project(self):
+        self.client.force_login(self.owner)
         url = reverse("main:delete_project", args=[self.project.id])
 
         self.assertEqual(self.client.get(url).status_code, 405)
@@ -220,3 +238,39 @@ class MainTest(TestCase):
 
         empty = self.client.get(reverse("main:get_projects_json"), {"title": "tidak-ada"})
         self.assertEqual(empty.json(), [])
+
+    # ---------- Hak akses view lama ----------
+    def test_anonymous_cannot_use_write_views(self):
+        login_url = reverse("main:login")
+        for name, args in [
+            ("main:create_project", []),
+            ("main:update_project", [self.project.id]),
+            ("main:delete_project", [self.project.id]),
+            ("main:create_experience", []),
+            ("main:update_experience", [self.experience.id]),
+        ]:
+            response = self.client.get(reverse(name, args=args))
+            self.assertEqual(response.status_code, 302)
+            self.assertIn(login_url, response["Location"])
+
+    def test_regular_user_cannot_create_or_update(self):
+        User.objects.create_user("biasa", password="pass12345")
+        self.client.login(username="biasa", password="pass12345")
+
+        self.assertEqual(self.client.get(reverse("main:create_project")).status_code, 403)
+        self.assertEqual(
+            self.client.get(reverse("main:update_project", args=[self.project.id])).status_code,
+            403,
+        )
+
+    def test_editor_can_update_but_not_create_or_delete_in_views(self):
+        editor = User.objects.create_user("editor", password="pass12345")
+        editor.groups.add(Group.objects.get_or_create(name="Editor")[0])
+        self.client.force_login(editor)
+
+        update_url = reverse("main:update_project", args=[self.project.id])
+        self.assertEqual(self.client.get(update_url).status_code, 200)
+        self.assertEqual(self.client.get(reverse("main:create_project")).status_code, 403)
+        delete_url = reverse("main:delete_project", args=[self.project.id])
+        self.assertEqual(self.client.post(delete_url).status_code, 403)
+        self.assertEqual(Projects.objects.count(), 1)
