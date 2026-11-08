@@ -53,4 +53,5 @@ urlpatterns = [
     path("projects/add-ajax/", create_project_ajax, name="create_project_ajax"),
     path("experience/add-ajax/", create_experience_ajax, name="create_experience_ajax"),
 
+
 ]

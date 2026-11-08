@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -41,6 +42,8 @@ def show_projects(request):
     }
     return render(request, "projects.html", context)
 
+
+@ensure_csrf_cookie
 def show_experience(request):
     context = {
         "name": "Kireina Naura Alifa",
