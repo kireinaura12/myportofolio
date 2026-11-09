@@ -61,3 +61,24 @@ Claude.ai:
 - menjelaskan penggunaan strip_tags, termasuk penempatan dan cara penggunaannya dalam kode
 ChatGPT:
 - membantu menjelaskan konsep debouncing, await pada fetch(), dan serangan XSS, serta perbedaannya dalam penerapan AJAX/JavaScript dan template Django
+
+### Tugas 6
+1. REST (Representational State Transfer) adalah gaya arsitektur untuk merancang API, berupa seperangkat prinsip tentang cara client dan server berinteraksi. JSON saja belum cukup untuk menyebut sebuah API sebagai RESTful karena JSON hanya merupakan cara menulis representasi resource. Sedangkan REST menentukan bagaimana interaksinya dirancan mulai dari alamatnya, metodenya, ataupun status balasannya.
+PUT: mengganti seluruh resource. Prosesnya dimulai dengan mengirim semua field, lalu field yang tidak dikirim dianggap hilang atau dikosongkan. Digunakan ketika ingin mengganti semua data dengan versi baru, atau untuk memastikan client tidak lupa mengirim field apa pun. Karena PUT akan langsung menolak apabila ada data yg kurang
+PATCH: mengubah sebagian resource. Prosesnya dimulai dengan hanya mengirim field yang ingin diubah, dan sisanya dibiarkan. Sehingga ini lebih cocok digunakan jika ingin mengubah satu atau beberapa field
+2. Serializer berperan sebagai penerjemah dua arah antara objek Python (model Django) dan format yang dipahami client (JSON), dengan tambahan validasi di tengahnya. Dibandingkan dengan merakit dictionary secara manual, serializer dapat memvalidasi input bawaan, dengan memeriksa tipe, panjang, dan pilihan dari model, ditambah validate_<field> untuk aturan sendiri (misalnya strip_tags). Sedangkan dengan dictionary manual, semua pengecekan itu harus ditulis sendiri di tiap view.
+3. Autentikasi merupakan proses mengenali identitas pengirim request. Otorisasi menentukan keputusan apakah identitas itu berhak atas aksi yang diminta. Hak akses harus diperiksa di server karena client sepenuhnya berada di tangan pengguna. Sehinga apa pun yang dikirim ke browser seharusnya bisa dibaca dan diubah.
+4. Karena SessionAuthentication mengenali pengguna lewat cookie session, dan browser menempelkan cookie itu secara otomatis pada setiap request ke domain yang bersangkutan, tanpa melihat dari mana request itu berasal. Misal terjadi CSRF, browser akan memberikan cookie sessionnya, lalu server melihat session pemilik yang sah sehingga permission class meloloskannya.
+test yang memakai force_authenticate akan melewati autentikasi. Karena method ini langsung menetapkan request.user di dalam test dan mengganti authentication class view dengan versi yang hanya mengembalikan user tersebut. Karena SessionAuthentication.authenticate() tidak pernah dipanggil, pemeriksaan CSRF di dalamnya juga tidak pernah dijalankan. Sehingga tidak dapat dibuktikan apakah perlindungan CSRF nya berjalan
+
+# AI Disclosure
+Dalam pengerjaan project ini, saya menggunakan:
+Claude.ai:
+- membantu debugging, terutama saat error instalasi djangorestframework
+- menganalisis checklist tugas dan menyusun langkah pengerjaannya
+- membantu menulis ExperienceSerializer dengan validate_<field> dan strip_tags
+- membantu mengubah halaman Experience agar memakai fetch() ke API, termasuk modal edit, toast, dan header X-CSRFToken
+- membantu menulis test dengan APITestCase
+- membantu menyusun alur pengujian manual (QA) melalui browser, Console, dan Django shell
+- menjelaskan konsep REST, perbedaan PUT dan PATCH, peran serializer, autentikasi dan otorisasi, serta CSRF
+
